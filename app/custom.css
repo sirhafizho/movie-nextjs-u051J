@@ -93,11 +93,63 @@ a {
   margin: 0 auto;
 }
 
+.user-circle-hover {
+  transition: fill 0.3s ease;
+}
+
+.user-circle-hover:hover {
+  fill: #3d3d3d;
+}
+
+.hover-click {
+  cursor: pointer;
+}
+
+.pcari-modal {
+  background: #1e1e1e;
+  color: #fed530;
+  padding: 1rem;
+  border: #fed530 solid 1px;
+}
+
+.pcari-modal .btn-close {
+  /* --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fed530'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e"); */
+  --bs-btn-close-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' stroke='currentColor' fill='%23fed530' stroke-width='0' viewBox='0 0 1024 1024' fill-rule='evenodd' height='1em' width='1em'%3E%3Cpath d='M880 112c17.7 0 32 14.3 32 32v736c0 17.7-14.3 32-32 32H144c-17.7 0-32-14.3-32-32V144c0-17.7 14.3-32 32-32ZM639.978 338.82l-.034.006c-.023.007-.042.018-.083.059L512 466.745l-127.86-127.86c-.042-.041-.06-.052-.084-.059a.118.118 0 0 0-.07 0c-.022.007-.041.018-.082.059l-45.02 45.019c-.04.04-.05.06-.058.083a.118.118 0 0 0 0 .07l.01.022a.268.268 0 0 0 .049.06L466.745 512l-127.86 127.862c-.041.04-.052.06-.059.083a.118.118 0 0 0 0 .07c.007.022.018.041.059.082l45.019 45.02c.04.04.06.05.083.058a.118.118 0 0 0 .07 0c.022-.007.041-.018.082-.059L512 557.254l127.862 127.861c.04.041.06.052.083.059a.118.118 0 0 0 .07 0c.022-.007.041-.018.082-.059l45.02-45.019c.04-.04.05-.06.058-.083a.118.118 0 0 0 0-.07l-.01-.022a.268.268 0 0 0-.049-.06L557.254 512l127.861-127.86c.041-.042.052-.06.059-.084a.118.118 0 0 0 0-.07c-.007-.022-.018-.041-.059-.082l-45.019-45.02c-.04-.04-.06-.05-.083-.058a.118.118 0 0 0-.07 0Z'%3E%3C/path%3E%3C/svg%3E");
+  font-size: 2rem;
+}
+
+.pcari-modal .modal-header {
+  border-bottom: none;
+}
+
+.pcari-modal .modal-footer {
+  border-top: none;
+}
+
+.pcari-modal input {
+  background: #1e1e1e !important;
+  border: #fed530 solid 2px;
+  color: #fed530 !important;
+}
+
+.pcari-modal .form-control::placeholder {
+  color: white;
+}
+
+/* .pcari-modal .form-control:focus + label {
+  color: #fed530;
+  background: transparent !important;
+} */
+
 @media (max-width: 768px) {
   .navbar-container {
     padding: 28px;
     padding-left: 15px;
     padding-right: 15px;
+  }
+
+  .navbar-link {
+    margin-top: 2rem;
   }
 }
 
@@ -225,6 +277,12 @@ a {
   font-weight: 700;
   line-height: 24px;
   padding: 0.4rem 2rem;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.pcari-button:hover {
+  background-color: rgba(254, 213, 48, 0.8);
+  opacity: 0.9;
 }
 
 @media (max-width: 768px) {
@@ -232,6 +290,7 @@ a {
     width: 100%;
   }
 }
+
 
 /* Default Card Styling */
 

@@ -1,7 +1,13 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 export default function Index() {
-  return (
-    <>
-      {/* <h1>mAIN pAGE</h1> */}
-    </>
-  );
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/home", { scroll: false });
+  }, []);
+
+  return <></>;
 }

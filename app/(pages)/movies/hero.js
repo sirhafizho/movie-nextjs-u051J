@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import playButton from "../../assets/images/play_button.svg";
 import { AiOutlineSearch } from "react-icons/ai";
-import DateTimePicker from "react-datetime-picker";
 import "react-datetime-picker/dist/DateTimePicker.css";
 
 export default function MoviesHome() {
