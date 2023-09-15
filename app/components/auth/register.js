@@ -12,10 +12,12 @@ export default function RegisterModal(props) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmedPassword] = useState("");
 
+  const {toggleLoginModal, ...others} = props
+
   return (
     <>
       <Modal
-        {...props}
+        {...others}
         aria-labelledby="contained-modal-title-vcenter"
         centered
         contentClassName="pcari-modal"
@@ -27,7 +29,7 @@ export default function RegisterModal(props) {
         <Modal.Body>
           <div className="row">
             <div className="col">
-              <form action="">
+              <form action="" id="registerForm">
                 <div className="mb-3">
                   <input
                     value={username}

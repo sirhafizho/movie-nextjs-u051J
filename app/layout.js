@@ -4,6 +4,7 @@ import { DM_Sans } from "next/font/google";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 // import SSRProvider from "react-bootstrap/SSRProvider";
+import { ReduxProvider } from "@/redux/provider";
 
 import MainNavbar from "./MainNavbar";
 import MainFooter from "./MainFooter";
@@ -20,9 +21,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="bg-custom">
       <body className={fonts.className}>
-        <MainNavbar />
-        {children}
-        <MainFooter />
+        <ReduxProvider>
+          <MainNavbar />
+          {children}
+          <MainFooter />
+        </ReduxProvider>
       </body>
     </html>
   );

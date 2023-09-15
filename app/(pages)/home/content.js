@@ -1,6 +1,21 @@
 import DefaultCard from "@/app/components/defaultCard";
 
-export default function HomeContent() {
+const getLatestMovies = async () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  const formattedDate = `${year}-${month}-${day}`;
+  const data = await fetch(
+    `https://821f21ea-3d75-4b17-bac5-f8a0fc587ad2.mock.pstmn.io/new_movies/?r_date=${formattedDate}`
+  );
+  const latestMovies = await data.json();
+  return latestMovies.data;
+};
+
+export default async function HomeContent() {
+  const latestMovies = await getLatestMovies();
+
   return (
     <>
       <div className="main-content">
@@ -15,31 +30,43 @@ export default function HomeContent() {
             </div>
           </div>
           {/* Content */}
-          <div className="row mt-4">
-            <div className="col">
-              {/* Content Showcase or Highlight */}
-              <div className="row g-3 gy-3">
-                <div className="col-xl-8 col-md-6">
-                  <DefaultCard />
-                </div>
-                <div className="col-xl-4 col-md-6">
-                  <DefaultCard title={"Interspace"} />
-                </div>
-              </div>
-              {/* Content Row */}
-              <div className="row g-3">
-                <div className="col-xl-4 col-md-6">
-                  <DefaultCard title={"Interspace"} />
-                </div>
-                <div className="col-xl-4 col-md-6">
-                  <DefaultCard title={"He & Him"} />
-                </div>
-                <div className="col-xl-4 col-md-6">
-                  <DefaultCard title={"Lo Lo Land"} />
+          {latestMovies && latestMovies.length !== 0 ? (
+            <div className="row mt-4">
+              <div className="col">
+                <div className="row g-3 gy-3">
+                  {latestMovies.map((movie, index) => {
+                    if (index === 0) {
+                      return (
+                        <div className="col-xl-8 col-md-6">
+                          <DefaultCard
+                            genre={movie.Genre}
+                            title={movie.Title}
+                            duration={movie.Duration}
+                            views={movie.Views}
+                            bgImage={movie.Poster}
+                          />
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div className="col-xl-4 col-md-6">
+                          <DefaultCard
+                            genre={movie.Genre}
+                            title={movie.Title}
+                            duration={movie.Duration}
+                            views={movie.Views}
+                            bgImage={movie.Poster}
+                          />
+                        </div>
+                      );
+                    }
+                  })}
                 </div>
               </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>

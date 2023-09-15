@@ -11,10 +11,12 @@ import ReCAPTCHA from "react-google-recaptcha";
 export default function ForgotPasswordModal(props) {
   const [credential, setCredential] = useState("");
 
+  const {toggleLoginModal, ...others} = props
+
   return (
     <>
       <Modal
-        {...props}
+        {...others}
         aria-labelledby="contained-modal-title-vcenter"
         centered
         contentClassName="pcari-modal"
@@ -33,7 +35,7 @@ export default function ForgotPasswordModal(props) {
                   We will send an email to set your new password.
                 </div>
               </div>
-              <form action="">
+              <form action="" id="forgotPasswordForm">
                 <div className="mb-3">
                   <input
                     value={credential}

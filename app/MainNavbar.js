@@ -1,4 +1,7 @@
+"use client";
+
 import { useState } from "react";
+import { logOut } from "@/redux/features/auth-slice";
 
 import { usePathname } from "next/navigation";
 import Container from "react-bootstrap/Container";

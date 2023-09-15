@@ -1,22 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+// import { logIn } from "@/redux/features/auth-slice";
+import { useDispatch } from "react-redux";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import ReCAPTCHA from "react-google-recaptcha";
+
+// const captchaValue = recaptcha.current.getValue();
+//     if (!captchaValue) {
+//       alert("Please verify the reCAPTCHA!");
+//     } else {
+//       // make form submission
+//       alert("Form submission successful!");
+//     }
 
 export default function LoginModal(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [reCaptcha, setReCaptcha] = useState(false);
+  const recaptcha = useRef();
+  const { toggleForgotPasswordModal, toggleRegisterModal, ...others } = props;
+
+  const dispatch = useDispatch();
+
+  // function onSubmitForm(e) {
+  //   e.preventDefault();
+  //   const data = {
+  //     username,
+  //     name,
+  //   };
+  //   dispatch(logIn(data));
+  // }
 
   return (
     <>
       <Modal
-        {...props}
+        {...others}
         aria-labelledby="contained-modal-title-vcenter"
         centered
         contentClassName="pcari-modal"
@@ -28,7 +49,7 @@ export default function LoginModal(props) {
         <Modal.Body>
           <div className="row">
             <div className="col">
-              <form action="">
+              <form id="loginForm">
                 <div className="mb-3">
                   <input
                     value={username}
@@ -54,7 +75,7 @@ export default function LoginModal(props) {
                 <div className="mb-4 d-flex justify-content-center align-items-center">
                   <ReCAPTCHA
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                    // onChange={onChange}
+                    ref={recaptcha}
                     theme="dark"
                   />
                 </div>
