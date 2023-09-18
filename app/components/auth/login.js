@@ -1,38 +1,70 @@
 "use client";
 
-import { useState, useRef } from "react";
-// import { logIn } from "@/redux/features/auth-slice";
-import { useDispatch } from "react-redux";
+import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
 import ReCAPTCHA from "react-google-recaptcha";
 
-// const captchaValue = recaptcha.current.getValue();
-//     if (!captchaValue) {
-//       alert("Please verify the reCAPTCHA!");
-//     } else {
-//       // make form submission
-//       alert("Form submission successful!");
-//     }
+import { useAuth } from "@/app/hooks/auth";
 
 export default function LoginModal(props) {
+  const { login } = useAuth({
+    middleware: "guest",
+  });
+
+  const currentUser = useSelector((state) => state.authReducer.value);
+
+  useEffect(() => {
+    if (currentUser.isAuth) {
+      props.onHide();
+      setUsername("");
+      setPassword("");
+      setRecaptcha(false);
+    }
+  }, [, currentUser]);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const recaptcha = useRef();
+  const [recaptcha, setRecaptcha] = useState(false);
+  const [errors, setErrors] = useState([]);
+  const [status, setStatus] = useState([]);
+
   const { toggleForgotPasswordModal, toggleRegisterModal, ...others } = props;
 
-  const dispatch = useDispatch();
+  function onChangeCaptcha(value) {
+    if (value) {
+      setErrors(null);
+    }
+    setRecaptcha(value);
+  }
 
-  // function onSubmitForm(e) {
-  //   e.preventDefault();
-  //   const data = {
-  //     username,
-  //     name,
-  //   };
-  //   dispatch(logIn(data));
-  // }
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    console.log({
+      username,
+      password,
+    });
+
+    if (recaptcha) {
+      setErrors(null);
+      login({
+        username,
+        password,
+        setErrors,
+        setStatus,
+      }).then(() => {
+        props.onHide();
+        setUsername("");
+        setPassword("");
+        setRecaptcha(false);
+      });
+    } else {
+      setErrors("Please click on the Recaptcha!");
+    }
+  };
 
   return (
     <>
@@ -49,7 +81,7 @@ export default function LoginModal(props) {
         <Modal.Body>
           <div className="row">
             <div className="col">
-              <form id="loginForm">
+              <form id="loginForm" onSubmit={handleLogin}>
                 <div className="mb-3">
                   <input
                     value={username}
@@ -75,12 +107,20 @@ export default function LoginModal(props) {
                 <div className="mb-4 d-flex justify-content-center align-items-center">
                   <ReCAPTCHA
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                    ref={recaptcha}
+                    onChange={onChangeCaptcha}
                     theme="dark"
                   />
                 </div>
-                <div className="mb-2">
+                {errors && (
                   <div
+                    className="mb-2 text-red text-center justify-content-center fw-bold"
+                    style={{ color: "red" }}
+                  >
+                    {errors}
+                  </div>
+                )}
+                <div className="mb-2">
+                  {/* <div
                     className="mb-2 text-center hover-click"
                     onClick={(e) => {
                       e.preventDefault();
@@ -88,7 +128,7 @@ export default function LoginModal(props) {
                     }}
                   >
                     Forgot Password
-                  </div>
+                  </div> */}
                   <button
                     className="pcari-button mb-3"
                     style={{ width: "100%", borderRadius: "10px" }}

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function Index() {
   const router = useRouter();
   useEffect(() => {
-    router.push("/home", { scroll: false });
+    router.push("/home", undefined, { shallow: true });
   }, []);
 
   return <></>;

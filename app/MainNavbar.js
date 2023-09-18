@@ -1,7 +1,6 @@
-"use client";
-
-import { useState } from "react";
-import { logOut } from "@/redux/features/auth-slice";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useAuth } from "@/app/hooks/auth";
 
 import { usePathname } from "next/navigation";
 import Container from "react-bootstrap/Container";
@@ -16,9 +15,21 @@ import { BiSolidUserCircle } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 
 export default function MainNavbar() {
+  const { logout } = useAuth({
+    middleware: "auth",
+  });
+
+  const currentUser = useSelector((state) => state.authReducer.value);
+
   const [loginModal, setLoginModal] = useState(false);
   const [registerModal, setRegisterModal] = useState(false);
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
   const pathname = usePathname();
   const isHomePage = pathname === "/home";
@@ -44,6 +55,11 @@ export default function MainNavbar() {
     setLoginModal(false);
     setRegisterModal(false);
     setForgotPasswordModal(true);
+  }
+
+  function onClickLogOut(e) {
+    e.preventDefault();
+    logout();
   }
 
   return (
@@ -149,21 +165,55 @@ export default function MainNavbar() {
                   fontWeight={"bold"}
                 />
               </a>
-              <div
-                className="nav-link text-white hover-click"
-                // href=""
-                onClick={(e) => {
-                  e.preventDefault();
-                  setLoginModal(true);
-                }}
-              >
-                <BiSolidUserCircle
-                  className="user-circle-hover"
-                  size={48}
-                  fill="#fed530"
-                />
-                {/* John Glich */}
-              </div>
+              {currentUser.isAuth === true ? (
+                <div
+                  className={`text-white hover-click dropdown ${
+                    isOpen ? "show" : ""
+                  }`}
+                  onClick={toggleDropdown}
+                >
+                  <BiSolidUserCircle
+                    className="user-circle-hover me-3"
+                    size={48}
+                    fill="#fed530"
+                  />
+                  <ul
+                    className={`dropdown-menu dropdown-menu-dark ${
+                      isOpen ? "show" : ""
+                    }`}
+                  >
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        TBD
+                      </a>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <a className="dropdown-item" onClick={onClickLogOut}>
+                        Log Out
+                      </a>
+                    </li>
+                  </ul>
+                  <span className="fw-bold">{currentUser.username}</span>
+                </div>
+              ) : (
+                <div
+                  className="nav-link text-white hover-click"
+                  // href=""
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setLoginModal(true);
+                  }}
+                >
+                  <BiSolidUserCircle
+                    className="user-circle-hover"
+                    size={48}
+                    fill="#fed530"
+                  />
+                </div>
+              )}
             </div>
           </Navbar.Collapse>
         </Container>

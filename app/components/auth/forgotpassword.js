@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -11,7 +12,16 @@ import ReCAPTCHA from "react-google-recaptcha";
 export default function ForgotPasswordModal(props) {
   const [credential, setCredential] = useState("");
 
-  const {toggleLoginModal, ...others} = props
+  const currentUser = useSelector((state) => state.authReducer.value);
+
+  useEffect(() => {
+    if (currentUser.isAuth) {
+      props.onHide();
+      setCredential("");
+    }
+  }, [, currentUser]);
+
+  const { toggleLoginModal, ...others } = props;
 
   return (
     <>

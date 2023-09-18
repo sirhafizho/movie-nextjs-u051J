@@ -5,6 +5,7 @@ const initialState = {
     isAuth: false,
     username: "",
     uid: "",
+    userData: {},
   },
 };
 
@@ -14,6 +15,17 @@ export const auth = createSlice({
   reducers: {
     logOut: () => {
       return initialState;
+    },
+    logIn: (state, action) => {
+      const data = action.payload;
+      return {
+        value: {
+          isAuth: true,
+          username: data.username,
+          uid: data.id,
+          userData: data,
+        },
+      };
     },
   },
 });

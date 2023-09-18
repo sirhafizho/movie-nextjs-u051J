@@ -1,9 +1,10 @@
 "use client";
 
+import { useEffect } from "react";
 import { DM_Sans } from "next/font/google";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-// import SSRProvider from "react-bootstrap/SSRProvider";
+import SSRProvider from "react-bootstrap/SSRProvider";
 import { ReduxProvider } from "@/redux/provider";
 
 import MainNavbar from "./MainNavbar";
@@ -22,9 +23,11 @@ export default function RootLayout({ children }) {
     <html lang="en" className="bg-custom">
       <body className={fonts.className}>
         <ReduxProvider>
-          <MainNavbar />
-          {children}
-          <MainFooter />
+          {/* <SSRProvider> */}
+            <MainNavbar />
+            {children}
+            <MainFooter />
+          {/* </SSRProvider> */}
         </ReduxProvider>
       </body>
     </html>

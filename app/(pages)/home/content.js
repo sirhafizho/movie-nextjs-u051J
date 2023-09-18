@@ -1,4 +1,5 @@
 import DefaultCard from "@/app/components/defaultCard";
+import Link from "next/link";
 
 const getLatestMovies = async () => {
   const today = new Date();
@@ -25,7 +26,7 @@ export default async function HomeContent() {
             <div className="col d-flex justify-content-between align-items-center">
               <div className="h3 text-white">New Releases</div>
               <div className="h5 view-more-style text-end">
-                <a href="">View More</a>
+                <Link href="/movies">View More</Link>
               </div>
             </div>
           </div>
